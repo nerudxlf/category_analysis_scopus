@@ -1,6 +1,6 @@
-import pandas as pd
 import math
-from pprint import pprint
+
+import pandas as pd
 
 
 def main():
@@ -10,6 +10,8 @@ def main():
     categories_list = scimagojr_df_title_and_categories['Categories'].to_list()
     oecd_scopus = pd.read_excel("scopus_oecd.xlsx")
     new_categories_list = []
+    list_all_categories = []
+
     for item in categories_list:
         item = item.replace(" (Q1)", "")
         item = item.replace(" (Q2)", "")
@@ -17,6 +19,7 @@ def main():
         item = item.replace(" (Q4)", "")
         new_categories_list.append(item)
     dict_title_categories = dict(zip(title_list, new_categories_list))
+
     for key, item in dict_title_categories.items():
         item = item.split("; ")
         dict_title_categories[key] = item
@@ -32,13 +35,10 @@ def main():
     list_categories_from_df = title_and_categories_and_citations_df["Categories"].to_list()
     list_citation_form_df = title_and_categories_and_citations_df["Цитирования"].to_list()
 
-    list_all_categories = []
     for elem_list in list_categories_from_df:
         for i in elem_list:
             list_all_categories.append(i)
     list_all_categories_set = list(set(list_all_categories))
-    print(len(list_categories_from_df))
-    print(len(list_citation_form_df))
     dict_all_categories = dict.fromkeys(list_all_categories_set, 0)
 
     for i in range(len(list_citation_form_df)):
